@@ -1,4 +1,4 @@
-module github.com/kadenosborn2019-cmyk/pokedexcli
+module github.com/kadenosborn2019-cmyk/pokedex_cli
 
 go 1.27.3
 
