@@ -45,11 +45,24 @@ func cleanInput(text string) []string {
 }
 
 type config struct {
-	commands map[string]cliCommand
+	commands  map[string]cliCommand
+	locations locationAreaList
 }
 
 type cliCommand struct {
 	name        string
 	description string
 	callback    func(*config) error
+}
+
+type NamedResources struct {
+	Name string `json:"name"`
+	Url  string `json:"url"`
+}
+
+type locationAreaList struct {
+	Count    int              `json:"count"`
+	Next     *string          `json:"next"`
+	Previous *string          `json:"previous"`
+	Results  []NamedResources `json:"results"`
 }

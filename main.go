@@ -13,7 +13,13 @@ func main() {
 				description: "Displays a help message",
 				callback:    commandHelp,
 			},
+			"map": {
+				name:        "map",
+				description: "Displays a pagination of locations from the pokeapi",
+				callback:    commandMap,
+			},
 		},
+		locations: locationAreaList{},
 	}
 
 	startRepl(&cfg)
