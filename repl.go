@@ -45,8 +45,10 @@ func cleanInput(text string) []string {
 }
 
 type config struct {
-	commands  map[string]cliCommand
-	locations locationAreaList
+	commands         map[string]cliCommand
+	locations        locationAreaList
+	nextLocationsURL *string
+	prevLocationsURL *string
 }
 
 type cliCommand struct {

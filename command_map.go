@@ -7,7 +7,7 @@ import (
 )
 
 func commandMap(cfg *config) error {
-	resp, err := http.Get(*cfg.locations.Next)
+	resp, err := http.Get(*cfg.nextLocationsURL)
 	if err != nil {
 		return err
 	}
@@ -17,6 +17,10 @@ func commandMap(cfg *config) error {
 	if err != nil {
 		return err
 	}
+
+	cfg.nextLocationsURL = cfg.locations.Next
+	cfg.prevLocationsURL = cfg.locations.Previous
+
 	for _, name := range cfg.locations.Results {
 		fmt.Println(name.Name)
 	}

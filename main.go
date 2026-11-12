@@ -2,7 +2,9 @@ package main
 
 func main() {
 	apiURL := "https://pokeapi.co/api/v2/location-area/"
-	cfg := config{
+	cfg := &config{
+		nextLocationsURL: &apiURL,
+		prevLocationsURL: &apiURL,
 		commands: map[string]cliCommand{
 			"exit": {
 				name:        "exit",
@@ -19,11 +21,14 @@ func main() {
 				description: "Displays a pagination of locations from the pokeapi",
 				callback:    commandMap,
 			},
+			"mapb": {
+				name:        "mapb",
+				description: "mapb is a map back function that displays the previous pagination of locations",
+				callback:    commandMapb,
+			},
 		},
-		locations: locationAreaList{
-			Next: &apiURL,
-		},
+		locations: locationAreaList{},
 	}
 
-	startRepl(&cfg)
+	startRepl(cfg)
 }
