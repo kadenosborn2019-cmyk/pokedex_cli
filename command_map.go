@@ -7,7 +7,7 @@ import (
 )
 
 func commandMap(cfg *config) error {
-	resp, err := http.Get("http://pokeapi.co/api/v2/location-area/")
+	resp, err := http.Get(*cfg.locations.Next)
 	if err != nil {
 		return err
 	}
@@ -20,5 +20,6 @@ func commandMap(cfg *config) error {
 	for _, name := range cfg.locations.Results {
 		fmt.Println(name.Name)
 	}
+
 	return nil
 }

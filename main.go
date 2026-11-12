@@ -1,6 +1,7 @@
 package main
 
 func main() {
+	apiURL := "https://pokeapi.co/api/v2/location-area/"
 	cfg := config{
 		commands: map[string]cliCommand{
 			"exit": {
@@ -19,7 +20,9 @@ func main() {
 				callback:    commandMap,
 			},
 		},
-		locations: locationAreaList{},
+		locations: locationAreaList{
+			Next: &apiURL,
+		},
 	}
 
 	startRepl(&cfg)
