@@ -7,21 +7,22 @@ import (
 )
 
 func commandMap(cfg *config) error {
+	var areaList locationAreaList
 	resp, err := http.Get(*cfg.nextLocationsURL)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
 
-	err = json.NewDecoder(resp.Body).Decode(&cfg.locations)
+	err = json.NewDecoder(resp.Body).Decode(&areaList)
 	if err != nil {
 		return err
 	}
 
-	cfg.nextLocationsURL = cfg.locations.Next
-	cfg.prevLocationsURL = cfg.locations.Previous
+	cfg.nextLocationsURL = areaList.Next
+	cfg.prevLocationsURL = areaList.Previous
 
-	for _, name := range cfg.locations.Results {
+	for _, name := range areaList.Results {
 		fmt.Println(name.Name)
 	}
 

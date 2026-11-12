@@ -27,7 +27,6 @@ func main() {
 				callback:    commandMapb,
 			},
 		},
-		locations: locationAreaList{},
 	}
 
 	startRepl(cfg)

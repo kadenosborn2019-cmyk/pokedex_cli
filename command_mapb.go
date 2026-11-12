@@ -8,7 +8,7 @@ import (
 )
 
 func commandMapb(cfg *config) error {
-
+	var areaList locationAreaList
 	if cfg.prevLocationsURL == nil {
 		return errors.New("you're on the first page")
 	}
@@ -18,14 +18,14 @@ func commandMapb(cfg *config) error {
 	}
 	defer resp.Body.Close()
 
-	err = json.NewDecoder(resp.Body).Decode(&cfg.locations)
+	err = json.NewDecoder(resp.Body).Decode(&areaList)
 	if err != nil {
 		return err
 	}
-	cfg.nextLocationsURL = cfg.locations.Next
-	cfg.prevLocationsURL = cfg.locations.Previous
+	cfg.nextLocationsURL = areaList.Next
+	cfg.prevLocationsURL = areaList.Previous
 
-	for _, name := range cfg.locations.Results {
+	for _, name := range areaList.Results {
 		fmt.Println(name.Name)
 	}
 
