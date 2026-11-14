@@ -1,10 +1,17 @@
 package main
 
+import (
+	"time"
+
+	pokecache "github.com/kadenosborn2019-cmyk/pokedex_cli/internal/pokeCache"
+)
+
 func main() {
 	apiURL := "https://pokeapi.co/api/v2/location-area/"
 	cfg := &config{
 		nextLocationsURL: &apiURL,
 		prevLocationsURL: &apiURL,
+		cache:            pokecache.NewCache(time.Duration(5 * time.Minute)),
 		commands: map[string]cliCommand{
 			"exit": {
 				name:        "exit",

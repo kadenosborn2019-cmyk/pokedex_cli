@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	pokecache "github.com/kadenosborn2019-cmyk/pokedex_cli/internal/pokeCache"
 )
 
 func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	for true {
+	for {
 		fmt.Print("Pokedex >")
 		scanner.Scan()
 		if scanner.Err() != nil {
@@ -48,6 +50,7 @@ type config struct {
 	commands         map[string]cliCommand
 	nextLocationsURL *string
 	prevLocationsURL *string
+	cache            pokecache.Cache
 }
 
 type cliCommand struct {
