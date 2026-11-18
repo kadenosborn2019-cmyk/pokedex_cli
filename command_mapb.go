@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, s string) error {
 	var areaList locationAreaList
 	if cfg.prevLocationsURL == nil {
 		return errors.New("you're on the first page")
@@ -22,7 +22,6 @@ func commandMapb(cfg *config) error {
 			fmt.Println(name.Name)
 		}
 
-		return nil
 	}
 	resp, err := http.Get(*cfg.prevLocationsURL)
 	if err != nil {

@@ -13,7 +13,7 @@ func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
-		fmt.Print("Pokedex >")
+		fmt.Print("Pokedex> ")
 		scanner.Scan()
 		if scanner.Err() != nil {
 			break
@@ -28,7 +28,7 @@ func startRepl(cfg *config) {
 
 		command, ok := cfg.commands[commandName]
 		if ok {
-			err := command.callback(cfg)
+			err := command.callback(cfg, "")
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -56,7 +56,7 @@ type config struct {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, string) error
 }
 
 type NamedResources struct {

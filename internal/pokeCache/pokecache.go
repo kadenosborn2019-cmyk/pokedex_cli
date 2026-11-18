@@ -1,7 +1,6 @@
 package pokecache
 
 import (
-	"errors"
 	"sync"
 	"time"
 )
@@ -27,9 +26,6 @@ func NewCache(interval time.Duration) Cache {
 }
 
 func (c Cache) Add(key string, value []byte) error {
-	if c.Cache == nil {
-		return errors.New("writing to empty map")
-	}
 	c.mux.Lock()
 	defer c.mux.Unlock()
 	c.Cache[key] = cacheEntry{

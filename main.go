@@ -33,6 +33,11 @@ func main() {
 				description: "mapb is a map back function that displays the previous pagination of locations",
 				callback:    commandMapb,
 			},
+			"explore": {
+				name:        "explore",
+				description: "explore takes a location area from the map command and displays information about the pokemon found there",
+				callback:    commandExplore,
+			},
 		},
 	}
 
