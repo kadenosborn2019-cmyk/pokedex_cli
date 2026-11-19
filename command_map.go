@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func commandMap(cfg *config, s string) error {
+func commandMap(cfg *config, s []string) error {
 	var areaList locationAreaList
 	hit, ok := cfg.cache.Get(*cfg.nextLocationsURL)
 	if ok {

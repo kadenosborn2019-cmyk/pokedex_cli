@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func commandMapb(cfg *config, s string) error {
+func commandMapb(cfg *config, s []string) error {
 	var areaList locationAreaList
 	if cfg.prevLocationsURL == nil {
 		return errors.New("you're on the first page")

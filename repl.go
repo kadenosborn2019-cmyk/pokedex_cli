@@ -13,7 +13,7 @@ func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
-		fmt.Print("Pokedex> ")
+		fmt.Print("Pokedex > ")
 		scanner.Scan()
 		if scanner.Err() != nil {
 			break
@@ -25,10 +25,11 @@ func startRepl(cfg *config) {
 		}
 
 		commandName := words[0]
+		argumentName := words[1:]
 
 		command, ok := cfg.commands[commandName]
 		if ok {
-			err := command.callback(cfg, "")
+			err := command.callback(cfg, argumentName)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -56,7 +57,7 @@ type config struct {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config, string) error
+	callback    func(*config, []string) error
 }
 
 type NamedResources struct {
@@ -65,8 +66,9 @@ type NamedResources struct {
 }
 
 type locationAreaList struct {
-	Count    int              `json:"count"`
-	Next     *string          `json:"next"`
-	Previous *string          `json:"previous"`
-	Results  []NamedResources `json:"results"`
+	Count             int               `json:"count"`
+	Next              *string           `json:"next"`
+	Previous          *string           `json:"previous"`
+	Results           []NamedResources  `json:"results"`
+	PokemonEncounters PokemonEncounters `json:"pokemon_encounters"`
 }

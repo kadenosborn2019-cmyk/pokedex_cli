@@ -6,9 +6,21 @@ import (
 	"net/http"
 )
 
-func commandExplore(cfg *config, s string) error {
-	var exploreArea locationAreaList
-	resp, err := http.Get(*cfg.nextLocationsURL + s)
+type Pokemon struct {
+	Name string `json:"name"`
+	URL  string `json:"url"`
+}
+
+type PokemonEncounters []struct {
+	Pokemon struct {
+		Name string `json:"name"`
+		URL  string `json:"url"`
+	} `json:"pokemon"`
+}
+
+func commandExplore(cfg *config, s []string) error {
+	var encounters locationAreaList
+	resp, err := http.Get(*cfg.nextLocationsURL + s[0] + "/")
 	if err != nil {
 		return err
 	}
@@ -18,17 +30,24 @@ func commandExplore(cfg *config, s string) error {
 		}
 	}()
 
-	if err := json.NewDecoder(resp.Body).Decode(&exploreArea); err != nil {
+	if err := json.NewDecoder(resp.Body).Decode(&encounters); err != nil {
 		return err
 	}
 
-	stream, err := json.Marshal(&exploreArea)
+	stream, err := json.Marshal(&encounters)
 	if err != nil {
 		return err
 	}
 
-	if err := cfg.cache.Add(*cfg.nextLocationsURL+s, stream); err != nil {
+	if err := cfg.cache.Add(*cfg.nextLocationsURL+"/"+s[0], stream); err != nil {
 		return err
 	}
+
+	fmt.Printf("Exploring %s...\n", s[0])
+	fmt.Println("Found Pokemon: ")
+	for _, name := range encounters.PokemonEncounters {
+		fmt.Printf("- %v\n", name.Pokemon.Name)
+	}
+
 	return nil
 }
